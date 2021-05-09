@@ -1,0 +1,46 @@
+proxy:
+  secretToken: ""
+
+prePuller:
+  hook:
+    enabled: false
+
+config:
+  Authenticator:
+    admin_users:
+      - superbo 
+    allowed_users:
+      - aa 
+  DummyAuthenticator:
+    password: "dummy"
+  JupyterHub:
+    authenticator_class: dummy
+
+singleuser:
+  storage:
+    dynamic:
+      storageClass: openebs-data-hostpath
+  extraEnv:
+    EDITOR: "vim"
+    GRANT_SUDO: "yes"
+  image:
+    name: jupyter/minimal-notebook
+    tag: 59c973d16bca
+  profileList:
+    - display_name: "Minimal environment"
+      description: "To avoid too much bells and whistles: Python."
+      default: true
+    - display_name: "Datascience environment"
+      description: "If you want the additional bells and whistles: Python."
+      kubespawner_override:
+        image: jupyter/scipy-notebook:59c973d16bca
+    - display_name: "Pyspark environment"
+      description: "Pyspark environment"
+      kubespawner_override:
+        image: superbo/spark-notebook:3.1-dm12
+    - display_name: "GPU Tensorflow Enironment"
+      description: "Spawns a notebook server with access to GPUs"
+      kubespawner_override:
+        image: superbo/tensorflow-gpu-notebook:2.4.1
+        extra_resource_limits:
+          nvidia.com/gpu: "2"
