@@ -5,16 +5,16 @@ prePuller:
   hook:
     enabled: false
 
-config:
-  Authenticator:
-    admin_users:
-      - superbo 
-    allowed_users:
-      - aa 
-  DummyAuthenticator:
-    password: "dummy"
-  JupyterHub:
-    authenticator_class: dummy
+hub:
+  config:
+    Authenticator:
+      admin_users:
+        - superbo 
+      allowed_users:
+        - test
+      enable_signup: true
+    JupyterHub:
+      authenticator_class: "nativeauthenticator.NativeAuthenticator"
 
 singleuser:
   storage:
